@@ -1,0 +1,160 @@
+\documentclass[tikz,border=10pt,12pt,x11names]{standalone}
+
+\usepackage{tikz}
+\usetikzlibrary{circuits.logic.US} % TiKZ Library for US Logic Circuits.
+\usetikzlibrary{positioning}
+
+\begin{document}
+
+\begin{tikzpicture}[circuit logic US]
+%% This is a place for a content
+
+%% выходы 4х сигналов (инвертированные)
+\node [not gate] (not1) at (0,13) {}; %X1
+\node [not gate] (not2) at (0,9) {}; %X2
+\node [not gate] (not3) at (0,5) {}; %X3
+\node [not gate] (not4) at (0,1) {}; %X4
+
+%% выходы 4х сигналов (прямые)
+\node (1) at ($(not1.input) - (0.05,0)$);
+\draw (1) -| ($(not1.input) - (1,0.5)$) |- ($(not1.input) - (-0.5, 1)$);
+\node (2) at ($(not2.input) - (0.05,0)$);
+\draw (2) -| ($(not2.input) - (1,0.5)$) |- ($(not2.input) - (-0.5, 1)$);
+\node (3) at ($(not3.input) - (0.05,0)$);
+\draw (3) -| ($(not3.input) - (1,0.5)$) |- ($(not3.input) - (-0.5, 1)$);
+\node (4) at ($(not4.input) - (0.05,0)$);
+\draw (4) -| ($(not4.input) - (1,0.5)$) |- ($(not4.input) - (-0.5, 1)$);
+
+%% Ставим метки на выходы неинвертированных сигналов
+\node (x1) at ($(not1.input) - (-0.5, 1)$);
+\node (x2) at ($(not2.input) - (-0.5, 1)$);
+\node (x3) at ($(not3.input) - (-0.5, 1)$);
+\node (x4) at ($(not4.input) - (-0.5, 1)$);
+
+%% Подписываем сигналы
+\draw [black,very thick] (not1.input) -- ++(left:15mm) node [above]{$X_1$};
+\draw [black,very thick] (not2.input) -- ++(left:15mm) node [above]{$X_2$};
+\draw [black,very thick] (not3.input) -- ++(left:15mm) node [above]{$X_3$};
+\draw [black,very thick] (not4.input) -- ++(left:15mm) node [above]{$X_4$};
+
+%% Рисуем 9 уникальных дизъюнкторов с 4мя входами
+\node [or gate,inputs={nnnn}] (or1) at (20,1) {}; % x1 + x2 + x3 - x4
+\node [or gate,inputs={nnnn}] (or2) at (20,2.5) {}; % x1 - x2 + x3 + x4
+\node [or gate,inputs={nnnn}] (or3) at (20,4) {}; % x1 - x2 + x3 - x4  
+\node [or gate,inputs={nnnn}] (or4) at (20,5.5) {}; % x1 - x2 - x3 + x4
+\node [or gate,inputs={nnnn}] (or5) at (20,7) {}; % x1 + x2 - x3 + x4
+\node [or gate,inputs={nnnn}] (or6) at (20,8.5) {}; % x1 - x2 - x3 - x4
+\node [or gate,inputs={nnnn}] (or7) at (20,10) {}; % x1 + x2 - x3 - x4
+\node [or gate,inputs={nnnn}] (or8) at (20,11.5) {}; % -x1 + x2 + x3 - x4
+\node [or gate,inputs={nnnn}] (or9) at (20,13) {}; % x1 + x2 + x3 + x4
+
+%% x1 + x2 + x3 - x4
+\draw [red] ($(x1) - (0.5, 0)$) -| ($(x1) + (1, 0)$) |- (or1.input 1);
+\draw [red] ($(x2) - (0.5, 0)$) -| ($(x2) + (1.5, 0)$) |- (or1.input 2);
+\draw [red] ($(x3) - (0.5, 0)$) -| ($(x3) + (2, 0)$) |- (or1.input 3);
+\draw [red] (not4.out) -| ($(not4.out) + (0.5, 0)$) |- (or1.input 4);
+
+%% x1 - x2 + x3 + x4
+\draw [blue, very thick] ($(x1) - (0.5, 0)$) -| ($(x1) + (2.5, 0)$) |- (or2.input 1);
+\draw [blue, very thick] (not2.out) -| ($(not2.out) + (3, 0)$) |- (or2.input 2);
+\draw [blue, very thick] ($(x3) - (0.5, 0)$) -| ($(x3) + (3.5, 0)$) |- (or2.input 3);
+\draw [blue, very thick] ($(x4) - (0.5, 0)$) -| ($(x4) + (4, 0)$) |- (or2.input 4);
+
+%% x1 - x2 + x3 - x4 
+\draw [green, very thick] ($(x1) - (0.5, 0)$) -| ($(x1) + (4.5, 0)$) |- (or3.input 1);
+\draw [green, very thick] (not2.out) -| ($(not2.out) + (5, 0)$) |- (or3.input 2);
+\draw [green, very thick] ($(x3) - (0.5, 0)$) -| ($(x3) + (5.5, 0)$) |- (or3.input 3);
+\draw [green, very thick] (not4.out) -| ($(not4.out) + (6, 0)$) |- (or3.input 4);
+
+%% x1 - x2 - x3 + x4
+\draw [yellow, very thick] ($(x1) - (0.5, 0)$) -| ($(x1) + (6.5, 0)$) |- (or4.input 1);
+\draw [yellow, very thick] (not2.out) -| ($(not2.out) + (7, 0)$) |- (or4.input 2);
+\draw [yellow, very thick] (not3.out) -| ($(not3.out) + (7.5, 0)$) |- (or4.input 3);
+\draw [yellow, very thick] ($(x4) - (0.5, 0)$) -| ($(x4) + (8, 0)$) |- (or4.input 4);
+
+%% x1 + x2 - x3 + x4
+\draw [orange, very thick] ($(x1) - (0.5, 0)$) -| ($(x1) + (8.5, 0)$) |- (or5.input 1);
+\draw [orange, very thick] ($(x2) - (0.5, 0)$) -| ($(x2) + (9, 0)$) |- (or5.input 2);
+\draw [orange, very thick] (not3.out) -| ($(not3.out) + (10, 0)$) |- (or5.input 3);
+\draw [orange, very thick] ($(x4) - (0.5, 0)$) -| ($(x4) + (10.5, 0)$) |- (or5.input 4);
+
+%% x1 - x2 - x3 - x4
+\draw [purple] ($(x1) - (0.5, 0)$) -| ($(x1) + (11, 0)$) |- (or6.input 1);
+\draw [purple] (not2.out) -| ($(not2.out) + (11.5, 0)$) |- (or6.input 2);
+\draw [purple] (not3.out) -| ($(not3.out) + (12, 0)$) |- (or6.input 3);
+\draw [purple] (not4.out) -| ($(not4.out) + (12.5, 0)$) |- (or6.input 4);
+
+%% x1 + x2 - x3 - x4
+\draw [black] ($(x1) - (0.5, 0)$) -| ($(x1) + (13, 0)$) |- (or7.input 1);
+\draw [black] ($(x2) - (0.5, 0)$) -| ($(x2) + (13.5, 0)$) |- (or7.input 2);
+\draw [black] (not3.out) -| ($(not3.out) + (14, 0)$) |- (or7.input 3);
+\draw [black] (not4.out) -| ($(not4.out) + (14.5, 0)$) |- (or7.input 4);
+
+%% -x1 + x2 + x3 - x4
+\draw [brown, very thick] (not1.out) -| ($(not1.out) + (15, 0)$) |- (or8.input 1);
+\draw [brown, very thick] ($(x2) - (0.5, 0)$) -| ($(x2) + (15.5, 0)$) |- (or8.input 2);
+\draw [brown, very thick] ($(x3) - (0.5, 0)$) -| ($(x3) + (16, 0)$) |- (or8.input 3);
+\draw [brown, very thick] (not4.out) -| ($(not4.out) + (16.5, 0)$) |- (or8.input 4);
+
+%% x1 + x2 + x3 + x4
+\draw [blue] ($(x1) - (0.5, 0)$) -| ($(x1) + (17, 0)$) |- (or9.input 1);
+\draw [blue] ($(x2) - (0.5, 0)$) -| ($(x2) + (17.5, 0)$) |- (or9.input 2);
+\draw [blue] ($(x3) - (0.5, 0)$) -| ($(x3) + (18, 0)$) |- (or9.input 3);
+\draw [blue] ($(x4) - (0.5, 0)$) -| ($(x4) + (18.5, 0)$) |- (or9.input 4);
+
+%% Дабовим конъюнкторы на схему
+\node [and gate,inputs={nn}] (and1) at (33,1)  {}; % a
+\node [and gate,inputs={nn}] (and2) at (33,3)  {}; % b
+% \node [and gate,inputs=n] (and3) at (12,5)  {}; % c
+\node [and gate,inputs={nnn}] (and4) at (33,5)  {}; % d
+\node [and gate,inputs={nnnnnn}] (and5) at (33,9)  {}; % e
+\node [and gate,inputs={nnnn}] (and6) at (33,11) {}; % f
+\node [and gate,inputs={nnn}] (and7) at (33,13) {}; % g
+
+%% a
+\draw [black] (or1.out) -| ($(or1.out) + (0.5,0)$) |- (and1.input 2);
+\draw [black] (or2.out) -| ($(or2.out) + (1,0)$) |- (and1.input 1);
+
+%% b
+\draw [black] (or3.out) -| ($(or3.out) + (1.5,0)$) |- (and2.input 2);
+\draw [black] (or4.out) -| ($(or4.out) + (2,0)$) |- (and2.input 1);
+
+%% c
+\draw [black,very thick] (or5.out) -- ++(right:14.5cm) node [above]{$c$};
+
+%% d
+\draw [black] (or1.out) -| ($(or1.out) + (2.5,0)$) |- (and4.input 1);
+\draw [black] (or2.out) -| ($(or2.out) + (3,0)$) |- (and4.input 2);
+\draw [black] (or6.out) -| ($(or6.out) + (3.5,0)$) |- (and4.input 3);
+
+%% e
+\draw [black] (or1.out) -| ($(or1.out) + (4,0)$) |- (and5.input 1);
+\draw [black] (or2.out) -| ($(or2.out) + (4.5,0)$) |- (and5.input 2);
+\draw [black] (or3.out) -| ($(or3.out) + (5,0)$) |- (and5.input 3);
+\draw [black] (or6.out) -| ($(or6.out) + (5.5,0)$) |- (and5.input 4);
+\draw [black] (or7.out) -| ($(or7.out) + (6,0)$) |- (and5.input 5);
+\draw [black] (or8.out) -| ($(or8.out) + (6.5,0)$) |- (and5.input 6);
+
+%% f
+\draw [black] (or1.out) -| ($(or1.out) + (7,0)$) |- (and6.input 1);
+\draw [black] (or4.out) -| ($(or4.out) + (7.5,0)$) |- (and6.input 2);
+\draw [black] (or6.out) -| ($(or6.out) + (8,0)$) |- (and6.input 3);
+\draw [black] (or7.out) -| ($(or7.out) + (8.5,0)$) |- (and6.input 4);
+
+%% g
+\draw [black] (or1.out) -| ($(or1.out) + (9,0)$) |- (and7.input 1);
+\draw [black] (or4.out) -| ($(or4.out) + (9.5,0)$) |- (and7.input 2);
+\draw [black] (or9.out) -| ($(or9.out) + (10,0)$) |- (and7.input 3);
+
+%% Подпишем выходы конъюнкторов
+\draw [black,very thick] (and1.out) -- ++(right:15mm) node [above]{$a$};
+\draw [black,very thick] (and2.out) -- ++(right:15mm) node [above]{$b$};
+% \draw [black,very thick] (and3.out) -- ++(right:15mm) node [above]{$c$};
+\draw [black,very thick] (and4.out) -- ++(right:15mm) node [above]{$d$};
+\draw [black,very thick] (and5.out) -- ++(right:15mm) node [above]{$e$};
+\draw [black,very thick] (and6.out) -- ++(right:15mm) node [above]{$f$};
+\draw [black,very thick] (and7.out) -- ++(right:15mm) node [above]{$g$};
+
+\end{tikzpicture}
+
+\end{document}

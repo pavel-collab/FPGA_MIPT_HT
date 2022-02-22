@@ -1,0 +1,74 @@
+\documentclass[a4paper, 12pt]{article}
+
+\input{preambule}
+\usepackage{lscape} % для горизонтальной ориентации листа
+\usepackage{import} % для использования import
+
+\newcommand{\AND}{\wedge}
+\newcommand{\Or}{\vee}
+% \newcommand{\Not}{\bar}
+\newcommand{\Not}{\overline}
+
+%Заговолок
+\author{Филиппенко Павел}
+\title{Домашнее задание №1 FPGA}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{wrapfigure}{l}{0.35\textwidth}
+    \centering
+    \includegraphics[width = 0.2\textwidth]{images/seven_seg_indecator.png}
+    \caption{семисегментное световое табло}
+    \label{fig:seven_seg_indicator}
+\end{wrapfigure}
+
+В этом задании мы составим логическую схему декодера для семисегментного индикатора. На рис. \ref{fig:seven_seg_indicator} дано изображение семисегментного
+индикатора. Пользуясь таблицей истинности табл. \ref{table:logic_table}, не трудно составить
+принципиальную схему дешифратора.
+
+\input{logic_table}
+
+Прежде всего необходимо составить логическую функцию для каждого из выходов $a, b, \dots, g$. Для этого мы воспользуемся СДНФ.
+
+\begin{enumerate}
+    \item Выход $a$: $(X_1 \Or X_2 \Or X_3 \Or \Not{X_4}) \AND (X_1 \Or \Not{X_2} \Or X_3 \Or X_4)$
+    \item Выход $b$: $(X_1 \Or \Not{X_2} \Or X_3 \Or \Not{X_4}) \AND (X_1 \Or \Not{X_2} \Or \Not{X_3} \Or X_4)$
+    \item Выход $c$: $(X_1 \Or X_2 \Or \Not{X_3} \Or X_4)$
+    \item Выход $d$: $(X_1 \Or X_2 \Or X_3 \Or \Not{X_4}) \AND (X_1 \Or \Not{X_2} \Or X_3 \Or X_4) \AND (X_1 \Or \Not{X_2} \Or \Not{X_3} \Or \Not{X_4})$
+    \item Выход $e$: $(X_1 \Or X_2 \Or X_3 \Or \Not{X_4}) \AND (X_1 \Or X_2 \Or \Not{X_3} \Or \Not{X_4}) \AND (X_1 \Or \Not{X_2} \Or X_3 \Or X_4) \AND (X_1 \Or \Not{X_2} \Or X_3 \Or \Not{X_4}) \AND (X_1 \Or \Not{X_2} \Or \Not{X_3} \Or \Not{X_4}) \AND (\Not{X_1} \Or X_2 \Or X_3 \Or \Not{X_4})$
+    \item Выход $f$: $(X_1 \Or X_2 \Or X_3 \Or \Not{X_4}) \AND (X_1 \Or X_2 \Or \Not{X_3} \Or X_4) \AND (X_1 \Or X_2 \Or \Not{X_3} \Or \Not{X_4}) \AND (X_1 \Or \Not{X_2} \Or \Not{X_3} \Or \Not{X_4})$
+    \item Выход $g$: $(X_1 \Or X_2 \Or X_3 \Or X_4) \AND (X_1 \Or X_2 \Or X_3 \Or \Not{X_4}) \AND (X_1 \Or \Not{X_2} \Or \Not{X_3} \Or \Not{X_4})$
+\end{enumerate}
+
+Заметим, что в логических функциях для разных выходов некоторые логические множетели повторяются. Выпишем для удобства набор уникальных логических полиномов.
+
+\begin{center}
+    $X_1 \Or X_2 \Or X_3 \Or \Not{X_4}$ \\
+    $X_1 \Or \Not{X_2} \Or X_3 \Or X_4$ \\
+    $X_1 \Or \Not{X_2} \Or X_3 \Or \Not{X_4}$ \\
+    $X_1 \Or \Not{X_2} \Or \Not{X_3} \Or X_4$ \\
+    $X_1 \Or X_2 \Or \Not{X_3} \Or X_4$ \\
+    $X_1 \Or \Not{X_2} \Or \Not{X_3} \Or \Not{X_4}$ \\
+    $X_1 \Or X_2 \Or \Not{X_3} \Or \Not{X_4}$ \\
+    $\Not{X_1} \Or X_2 \Or X_3 \Or \Not{X_4}$ \\
+    $X_1 \Or X_2 \Or X_3 \Or X_4$ \\
+\end{center}
+
+Используя составленные логические функции и набор уникальных логических сумм нетрудно нарисовать принципиальную схему, используя базовые логические элементы рис. \ref{fig:Logic_scheme}.
+
+%% Поскольку код логической схемы формирует файл, не
+%  помещающийся в стандартные типографские размеры, 
+%  схему вставим в качестве картинки
+\begin{landscape}
+    \begin{figure}
+        \centering
+        \includegraphics[scale=0.69]{images/test_logic_schems.pdf}
+        \caption{Logic scheme}
+        \label{fig:Logic_scheme}
+    \end{figure}
+\end{landscape}
+
+\end{document}
