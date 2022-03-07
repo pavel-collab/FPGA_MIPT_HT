@@ -1,7 +1,7 @@
 /*
 Test banch для модуля SR-Latch
 */
-//* How to build: iverilog SR_Latch_TB.v SR_OR_Latch.v -o out
+//* How to build: iverilog D_Latch_TB.v D_Latch.v SR_Latch.v -o out
 //* ./out
 //* gtkwave dump.vcd
 // Устанавливаем размерность времени
@@ -14,33 +14,34 @@ module testbench(
 );
 
 // создадим регистровые переменные и присвоим им начальные значения 
-reg S_i = 1'b0;
-reg R_i = 1'b0;
-
-// создаем регистр состояния, присваиваем ему начальное значение 1
-reg clk = 1'b1;
+reg D_i = 1'b0;
+reg C_i = 1'b1;
 
 // создаем экземпляр модуля SR_Latch и соединяем его входы и выходы с входами и выходами test banch 
-SR_OR_Latch SR_Latch_inst(
-     .S(S_i),
-     .R(R_i),
-     .C(clk),
+D_Latch D_Latch_inst(
+     .D(D_i),
+     .C(C_i),
      .Q(Q_o),
      .nQ(nQ_o)
 );
 
 // основной блок
 initial begin
-     $dumpvars;
-     $display("Test started");
-     #1 S_i = ~S_i;
-     #1 S_i = ~S_i;
-     #1 R_i = ~R_i;
-     #1 R_i = ~R_i;
-     #1 S_i = ~S_i;
-     #1 S_i = ~S_i;
+    $dumpvars;
+    $display("Test started");
+    #1 D_i = ~D_i;
+    #2 D_i = ~D_i;
+    #1 D_i = ~D_i;
+    #1 D_i = ~D_i;
+    #1 D_i = ~D_i;
+    #1 C_i = ~C_i;
+    #1 D_i = ~D_i;
+    #2 C_i = ~C_i;
+    #1 D_i = ~D_i;
+    #1 D_i = ~D_i;
+    #1 C_i = ~C_i;
 
-     #100 $finish;
+    #100 $finish;
 end
 
 endmodule

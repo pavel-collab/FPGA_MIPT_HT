@@ -7,7 +7,7 @@ SR_OR_Latch.v -- на логическом "ИЛИ"
 SR_Latch.v -- на логическом "И"
 */
 // S, R -- входные шины, C -- шина состояния
-module SR_Latch(
+module SR_OR_Latch(
     input wire S,
     input wire R,
     input wire C,
