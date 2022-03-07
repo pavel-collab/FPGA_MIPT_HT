@@ -14,7 +14,7 @@ module SR_Latch(
     output wire Q,
     output wire nQ
 );
-    assign Q = (~(R | nQ)&C);
-    assign nQ = (~(S | Q)&C);
+    assign Q = (~(R & nQ)&C);
+    assign nQ = (~(S & Q)&C);
 
 endmodule

@@ -6,12 +6,10 @@ module D_FlipFlop(
 );
 
 wire QM;
-wire nC;
-assign nC = ~C;
 
 D_Latch master(
     .D(D),
-    .C(C),
+    .C(~C),
     .Q(QM)
 );
 
