@@ -17,10 +17,14 @@ module testbench(
 reg S_i = 1'b0;
 reg R_i = 1'b0;
 
+// создаем регистр состояния, присваиваем ему начальное значение 1
+reg clk = 1'b1;
+
 // создаем экземпляр модуля SR_Latch и соединяем его входы и выходы с входами и выходами test banch 
 SR_Latch SR_Latch_inst(
      .S(S_i),
      .R(R_i),
+     .C(clk),
      .Q(Q_o),
      .nQ(nQ_o)
 );
