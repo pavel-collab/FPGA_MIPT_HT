@@ -8,9 +8,9 @@ SR_Latch.v -- на логическом "И"
 */
 // S, R -- входные шины, C -- шина состояния
 module SR_OR_Latch(
-    input wire S,
-    input wire R,
-    input wire C,
+    input wire S, // Set
+    input wire R, // Reset
+    input wire C, // Condition
     output wire Q,
     output wire nQ
 );

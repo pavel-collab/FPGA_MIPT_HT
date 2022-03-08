@@ -1,6 +1,6 @@
 module D_FlipFlop(
-    input wire D,
-    input wire C,
+    input wire D, // Data
+    input wire C, // Condition
     output wire Q,
     output wire nQ
 );
