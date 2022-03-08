@@ -34,7 +34,7 @@ gtkwave dump.vcd
 Полученная временная диаграмма:
 
 <p align="center">
-    <img src="" alt="caption" width="600"/>
+    <img src="https://github.com/pavel-collab/FPGA_MIPT_HT/blob/master/HT2/images/SR_Latch_test.png" alt="caption" width="600"/>
 </p>
 
 ### D-Latch
@@ -60,7 +60,7 @@ gtkwave dump.vcd
 Полученная временная диаграмма:
 
 <p align="center">
-    <img src="" alt="caption" width="600"/>
+    <img src="https://github.com/pavel-collab/FPGA_MIPT_HT/blob/master/HT2/images/D_Latch_test.png" alt="caption" width="600"/>
 </p>
 
 ### D-FlipFlop
@@ -83,5 +83,5 @@ gtkwave dump.vcd
 Полученная временная диаграмма:
 
 <p align="center">
-    <img src="" alt="caption" width="600"/>
+    <img src="https://github.com/pavel-collab/FPGA_MIPT_HT/blob/master/HT2/images/D_FlipFlop_test.png" alt="caption" width="600"/>
 </p>
